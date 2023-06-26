@@ -54,6 +54,10 @@ The following queries are available:
 - `searchJokes`: Searches for jokes based on a provided query string.
 - `getCommentsByJoke`: Retrieves all comments for a specific joke, sorted by specified criteria (e.g., newest, highest rated).
 - `getHotJokes`: Retrieves the hottest jokes based on likes and comment activity.
+- `getJokeById`: Retrieves a joke by its unique identifier.
+- `getTopJokes`: Retrieves the top-rated jokes based on user ratings.
+- `getRandomJoke`: Retrieves a random joke from the collection.
+- `getUserLikedJokes`: Retrieves jokes that a specific user has liked.
 
 Guest users can access all of these queries.
 
@@ -68,6 +72,16 @@ The following mutations are available:
 - `addComment`: Adds a comment to a joke.
 - `activateComment`: Activates a comment. Requires admin authentication.
 - `deactivateComment`: Deactivates a comment. Requires admin authentication.
+- `registerUser`: Registers a new user in the system.
+- `rateJoke`: Rates a joke with a given score (e.g., 1-5 stars).
+- `updateUserProfile`: Updates the profile information for a user.
+- `deleteUser`: Deletes a user from the system.
+- `addCategory`: Adds a new category for jokes.
+- `editCategory`: Edits the details of an existing category.
+- `deleteCategory`: Deletes a category from the system.
+- `addTagToJoke`: Adds a tag to a joke for better categorization.
+- `removeTagFromJoke`: Removes a tag from a joke.
+- `getPopularTags`: Retrieves the most popular tags used for jokes.
 
 Please note that the likeJoke, addComment, activateComment, and deactivateComment mutations require user authentication.
 
