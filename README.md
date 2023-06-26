@@ -28,6 +28,7 @@ npm run build
 ```
 
 Start the server:
+
 ```shell
 npm start
 ```
@@ -114,6 +115,128 @@ docker run -p 3000:3000 joke-api
 ```
 
 The API will be accessible at http://localhost:3000 within the Docker container.
+
+## Models
+
+**Joke Model**
+
+```typescript
+interface Joke {
+  id: string;
+  text: string;
+  category: string;
+  likes: number;
+  createdAt: Date;
+  updatedAt: Date;
+  comments: Comment[];
+  tags: string[];
+}
+```
+
+**Comment Model**
+
+```typescript
+interface Comment {
+  id: string;
+  text: string;
+  user: User;
+  active: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**User Model**
+
+```typescript
+interface User {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+  likedJokes: Joke[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**Category Model**
+
+```typescript
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**Tag Model**
+
+```typescript
+interface Tag {
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**Rating Model**
+
+```typescript
+interface Rating {
+  id: string;
+  joke: Joke;
+  user: User;
+  score: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**Like Model**
+
+```typescript
+interface Like {
+  id: string;
+  joke: Joke;
+  user: User;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**TagCategory Model**
+
+```typescript
+interface TagCategory {
+  id: string;
+  tag: Tag;
+  category: Category;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**UserProfile Model**
+
+```typescript
+interface UserProfile {
+  id: string;
+  user: User;
+  firstName: string;
+  lastName: string;
+  bio: string;
+  avatar: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+Feel free to extend or modify these models based on the specific requirements and additional fields you may need for your Joke API.
 
 ## Contributing
 
