@@ -1,0 +1,187 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Jock {
+  id    Int    @id @default(autoincrement())
+  text  String
+  likes Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  Tags       Tag[]
+  Category   Category   @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  User       User?      @relation(fields: [userId], references: [id])
+  userId     Int?
+  Rating     Rating[]
+  Like       Like[]
+  Report     Report[]
+  Comment    Comment[]
+  Activite   Activity[]
+}
+
+model Comment {
+  id        Int        @id @default(autoincrement())
+  text      String
+  user      User       @relation(fields: [userId], references: [id])
+  active    Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  Activity  Activity[]
+  userId    Int
+  Jock      Jock?      @relation(fields: [jockId], references: [id])
+  jockId    Int?
+}
+
+model User {
+  id         Int    @id @default(autoincrement())
+  username   String
+  email      String @unique
+  passwoed   String
+  role       Role
+  likedJokes Jock[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  Rating       Rating[]
+  Like         Like[]
+  Report       Report[]
+  Admin        Admin[]
+  Activity     Activity[]
+  Notification Notification[]
+  Comment      Comment[]
+  profile      UserProfile?
+}
+
+enum Role {
+  Admin
+  User
+}
+
+model UserProfile {
+  id        Int    @id @default(autoincrement())
+  firstName String
+  lastName  String
+  bio       String
+  avatar    String
+
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  userId    Int      @unique
+}
+
+model Category {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  TagCategory TagCategory[]
+  Jock        Jock[]
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Jock      Jock?    @relation(fields: [jockId], references: [id])
+  jockId    Int?
+}
+
+model TagCategory {
+  id         Int      @id @default(autoincrement())
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Rating {
+  id    Int  @id @default(autoincrement())
+  joke  Jock @relation(fields: [jockId], references: [id])
+  user  User @relation(fields: [userId], references: [id])
+  score Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  jockId    Int
+  userId    Int
+}
+
+model Like {
+  id   Int  @id @default(autoincrement())
+  joke Jock @relation(fields: [jockId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  jockId    Int
+  userId    Int
+}
+
+model Report {
+  id     Int    @id @default(autoincrement())
+  joke   Jock   @relation(fields: [jockId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  reason String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  jockId    Int
+  userId    Int
+}
+
+model Admin {
+  id   Int  @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  userId    Int
+}
+
+model Activity {
+  id        Int          @id @default(autoincrement())
+  joke      Jock         @relation(fields: [jockId], references: [id])
+  comment   Comment      @relation(fields: [commentId], references: [id])
+  user      User         @relation(fields: [userId], references: [id])
+  type      ActivityType
+  cretaedAt DateTime     @default(now())
+  updatedAt DateTime     @default(now())
+  jockId    Int
+  commentId Int
+  userId    Int
+}
+
+enum ActivityType {
+  Like
+  Comment
+  Rating
+}
+
+model Notification {
+  id      Int    @id @default(autoincrement())
+  user    User   @relation(fields: [userId], references: [id])
+  message String
+  read    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  userId    Int
+}
