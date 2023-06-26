@@ -236,6 +236,57 @@ interface UserProfile {
 }
 ```
 
+**Report Model**
+
+```typescript
+interface Report {
+  id: string;
+  joke: Joke;
+  user: User;
+  reason: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**Admin Model**
+
+```typescript
+interface Admin {
+  id: string;
+  user: User;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**Activity Model**
+
+```typescript
+interface Activity {
+  id: string;
+  joke: Joke;
+  comment: Comment;
+  user: User;
+  type: string; // e.g., "like", "comment", "rating"
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
+**Notification Model**
+
+```typescript
+interface Notification {
+  id: string;
+  user: User;
+  message: string;
+  read: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
 Feel free to extend or modify these models based on the specific requirements and additional fields you may need for your Joke API.
 
 ## Contributing
