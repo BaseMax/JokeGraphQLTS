@@ -13,7 +13,8 @@ datasource db {
 model Joke {
   id    Int    @id @default(autoincrement())
   text  String
-  likes Int @default(0)
+  rate  Float  @default(0)
+  likes Int    @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -83,7 +84,7 @@ model UserProfile {
 }
 
 model Category {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   description String?
 
@@ -105,7 +106,7 @@ model Tag {
 
 model TagCategory {
   id         Int      @id @default(autoincrement())
-  name String
+  name       String
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
 
@@ -114,10 +115,10 @@ model TagCategory {
 }
 
 model Rating {
-  id    Int  @id @default(autoincrement())
-  joke  Joke @relation(fields: [jokeId], references: [id])
-  user  User @relation(fields: [userId], references: [id])
-  score Int
+  id    Int   @id @default(autoincrement())
+  joke  Joke  @relation(fields: [jokeId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+  score Float @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
