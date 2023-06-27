@@ -10,10 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Jock {
+model Joke {
   id    Int    @id @default(autoincrement())
   text  String
-  likes Int
+  likes Int @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -39,17 +39,17 @@ model Comment {
   updatedAt DateTime   @default(now())
   Activity  Activity[]
   userId    Int
-  Jock      Jock?      @relation(fields: [jockId], references: [id])
-  jockId    Int?
+  Joke      Joke?      @relation(fields: [jokeId], references: [id])
+  jokeId    Int?
 }
 
 model User {
   id         Int    @id @default(autoincrement())
-  username   String
+  username   String @unique
   email      String @unique
-  passwoed   String
-  role       Role
-  likedJokes Jock[]
+  password   String
+  role       Role   @default(user)
+  likedJokes Joke[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -65,8 +65,8 @@ model User {
 }
 
 enum Role {
-  Admin
-  User
+  admin
+  user
 }
 
 model UserProfile {
@@ -85,12 +85,12 @@ model UserProfile {
 model Category {
   id          Int    @id @default(autoincrement())
   name        String
-  description String
+  description String?
 
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now())
   TagCategory TagCategory[]
-  Jock        Jock[]
+  Joke        Joke[]
 }
 
 model Tag {
@@ -99,12 +99,13 @@ model Tag {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  Jock      Jock?    @relation(fields: [jockId], references: [id])
-  jockId    Int?
+  Joke      Joke?    @relation(fields: [jokeId], references: [id])
+  jokeId    Int?
 }
 
 model TagCategory {
   id         Int      @id @default(autoincrement())
+  name String
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
 
@@ -114,36 +115,36 @@ model TagCategory {
 
 model Rating {
   id    Int  @id @default(autoincrement())
-  joke  Jock @relation(fields: [jockId], references: [id])
+  joke  Joke @relation(fields: [jokeId], references: [id])
   user  User @relation(fields: [userId], references: [id])
   score Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  jockId    Int
+  jokeId    Int
   userId    Int
 }
 
 model Like {
   id   Int  @id @default(autoincrement())
-  joke Jock @relation(fields: [jockId], references: [id])
+  joke Joke @relation(fields: [jokeId], references: [id])
   user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  jockId    Int
+  jokeId    Int
   userId    Int
 }
 
 model Report {
   id     Int    @id @default(autoincrement())
-  joke   Jock   @relation(fields: [jockId], references: [id])
+  joke   Joke   @relation(fields: [jokeId], references: [id])
   user   User   @relation(fields: [userId], references: [id])
   reason String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  jockId    Int
+  jokeId    Int
   userId    Int
 }
 
@@ -158,13 +159,13 @@ model Admin {
 
 model Activity {
   id        Int          @id @default(autoincrement())
-  joke      Jock         @relation(fields: [jockId], references: [id])
+  joke      Joke         @relation(fields: [jokeId], references: [id])
   comment   Comment      @relation(fields: [commentId], references: [id])
   user      User         @relation(fields: [userId], references: [id])
   type      ActivityType
   cretaedAt DateTime     @default(now())
   updatedAt DateTime     @default(now())
-  jockId    Int
+  jokeId    Int
   commentId Int
   userId    Int
 }
