@@ -7,20 +7,29 @@ import { PrismaService } from '../prisma/prisma.service';
 export class JokeService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createJockInput: CreateJokeInput) {
+  create(createJokeInput: CreateJokeInput) {
     return this.prisma.joke.create({
       data: {
-        text: createJockInput.text,
+        text: createJokeInput.text,
         Category: {
-          connect: { id: createJockInput?.categoryId },
+          connect: { id: createJokeInput?.categoryId },
         },
       },
+    });
+  }
+
+  async getRandomJoke() {
+    const jokeCount = await this.prisma.joke.count();
+    const randomIndex = Math.floor(Math.random() * jokeCount);
+    return await this.prisma.joke.findFirst({
+      skip: randomIndex,
     });
   }
 
   search(query: string) {
     return this.prisma.joke.findMany({ where: { text: { contains: query } } });
   }
+
   async findAll() {
     return await this.prisma.joke.findMany({ include: { Category: true } });
   }
@@ -32,11 +41,11 @@ export class JokeService {
     });
   }
 
-  update(id: number, updateJockInput: UpdateJokeInput) {
+  update(id: number, updateJokeInput: UpdateJokeInput) {
     return this.prisma.joke.update({
       where: { id },
       data: {
-        text: updateJockInput.text,
+        text: updateJokeInput.text,
         updatedAt: new Date().toString(),
       },
     });

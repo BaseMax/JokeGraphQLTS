@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JokeResolver } from './joke.resolver';
 import { JokeService } from './joke.service';
 
-describe('JockResolver', () => {
+describe('JokeResolver', () => {
   let resolver: JokeResolver;
 
   beforeEach(async () => {

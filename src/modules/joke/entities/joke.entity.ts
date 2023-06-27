@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { Category } from 'src/modules/category/entities/category.entity';
 
 @ObjectType()
@@ -11,6 +11,9 @@ export class Joke {
 
   @Field(() => Int)
   likes: number;
+
+  @Field(() => Float)
+  rate: number;
 
   @Field(() => Category, { name: 'category' })
   Category: Category;
