@@ -7,6 +7,7 @@ import { SharedModules } from './modules/shared/shared.module';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { JokeModule } from './modules/joke/joke.module';
 import { CategoryModule } from './modules/category/category.module';
+import { RatingModule } from './modules/rating/rating.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CategoryModule } from './modules/category/category.module';
     AuthModule,
     JokeModule,
     CategoryModule,
+    RatingModule,
   ],
 })
 export class AppModule {}
