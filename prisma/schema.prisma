@@ -40,8 +40,8 @@ model Comment {
   updatedAt DateTime   @default(now())
   Activity  Activity[]
   userId    Int
-  Joke      Joke?      @relation(fields: [jokeId], references: [id])
-  jokeId    Int?
+  Joke      Joke      @relation(fields: [jokeId], references: [id], onDelete: Cascade)
+  jokeId    Int
 }
 
 model User {
@@ -77,7 +77,7 @@ model UserProfile {
   bio       String
   avatar    String
 
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   userId    Int      @unique
