@@ -23,6 +23,11 @@ export class JokeResolver {
     return this.jokeService.search(query);
   }
 
+  @Query(() => [Joke], { name: 'getTopJokes' })
+  getTopJokes() {
+    return this.jokeService.getTopJokes();
+  }
+
   @Query(() => Joke, { name: 'getRandomJoke' })
   getRandomJoke() {
     return this.jokeService.getRandomJoke();

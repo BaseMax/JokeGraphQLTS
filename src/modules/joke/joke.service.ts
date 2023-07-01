@@ -26,8 +26,19 @@ export class JokeService {
     });
   }
 
-  search(query: string) {
-    return this.prisma.joke.findMany({ where: { text: { contains: query } } });
+  async search(query: string) {
+    return await this.prisma.joke.findMany({
+      where: { text: { contains: query } },
+    });
+  }
+
+  getJokesByFilter(filter) {}
+
+  getTopJokes() {
+    return this.prisma.joke.findMany({
+      orderBy: { rate: 'desc' },
+      include: { Category: true },
+    });
   }
 
   async findAll() {
