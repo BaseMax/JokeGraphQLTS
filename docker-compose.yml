@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  joke-api:
+    build:
+      context: .
+      dockerfile: DockerFile
+    container_name: joke-api
+    restart: always
+    port:
+      - 4000:4000
+    depends_on:
+      - postgres
+    env_file:
+      - .env    
+  
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: always
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    name: pg-db
