@@ -2,10 +2,15 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateRatingInput } from './dto/create-rating.input';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { ActivityService } from '../activity/activity.service';
+import { ActivityType } from '../activity/types/activity.enum';
 
 @Injectable()
 export class RatingService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly activateService: ActivityService,
+    ) {}
 
   async create(userId: number, createRatingInput: CreateRatingInput) {
     await this.checkRatingExistsInUser(userId, createRatingInput.jokeId);
@@ -55,6 +60,11 @@ export class RatingService {
         include: { joke: true, user: true },
       });
       await this.calculationRateAndUpdateJoke(ctx, jokeId);
+      await this.activateService.create({
+        type: ActivityType.Rating,
+        jokeId: rate.jokeId,
+        userId: rate.userId,
+      });
 
       return rate;
     });

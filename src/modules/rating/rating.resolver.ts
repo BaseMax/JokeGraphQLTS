@@ -8,21 +8,11 @@ import { GetCurrentUserId } from 'src/common/decorators';
 export class RatingResolver {
   constructor(private readonly ratingService: RatingService) {}
 
-  @Mutation(() => Rating)
+  @Mutation(() => Rating, { name: 'rateJoke' })
   createRating(
     @Args('createRatingInput') createRatingInput: CreateRatingInput,
-    //@GetCurrentUserId() userId: number,
+    @GetCurrentUserId() userId: number,
   ) {
-    return this.ratingService.create(+3, createRatingInput);
-  }
-
-  @Query(() => [Rating], { name: 'rating' })
-  findAll() {
-    return this.ratingService.findAll();
-  }
-
-  @Query(() => Rating, { name: 'rating' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.ratingService.findOne(id);
+    return this.ratingService.create(+userId, createRatingInput);
   }
 }

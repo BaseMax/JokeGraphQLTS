@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { RatingService } from './rating.service';
 import { RatingResolver } from './rating.resolver';
+import { ActivityModule } from '../activity/activity.module';
 
 @Module({
-  providers: [RatingResolver, RatingService]
+  imports: [ActivityModule],
+  providers: [RatingResolver, RatingService],
 })
 export class RatingModule {}
