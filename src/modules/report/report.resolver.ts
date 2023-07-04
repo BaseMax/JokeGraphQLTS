@@ -9,7 +9,7 @@ import { Role } from '../auth/types/role.enum';
 export class ReportResolver {
   constructor(private readonly reportService: ReportService) {}
 
-  @Mutation(() => Report)
+  @Mutation(() => Report, { name: 'reportJoke' })
   createReport(
     @Args('createReportInput') createReportInput: CreateReportInput,
     @GetCurrentUserId() userId: number,
