@@ -3,29 +3,35 @@ import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
+import { Public, Roles } from '../../common/decorators';
+import { Role } from '../auth/types/role.enum';
 
 @Resolver(() => Category)
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Mutation(() => Category)
+  @Roles(Role.Admin)
+  @Mutation(() => Category, { name: 'addCategory' })
   createCategory(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
   ) {
     return this.categoryService.create(createCategoryInput);
   }
 
+  @Public()
   @Query(() => [Category], { name: 'category' })
   findAll() {
     return this.categoryService.findAll();
   }
 
+  @Public()
   @Query(() => Category, { name: 'category' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.categoryService.findOne(id);
   }
 
-  @Mutation(() => Category)
+  @Roles(Role.Admin)
+  @Mutation(() => Category, { name: 'editCategory' })
   updateCategory(
     @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
   ) {
@@ -35,8 +41,9 @@ export class CategoryResolver {
     );
   }
 
+  @Roles(Role.Admin)
   @Mutation(() => Category)
-  removeCategory(@Args('id', { type: () => Int }) id: number) {
+  deleteCategory(@Args('id', { type: () => Int }) id: number) {
     return this.categoryService.remove(id);
   }
 }
