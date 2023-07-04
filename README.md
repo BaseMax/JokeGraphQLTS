@@ -33,17 +33,17 @@ Start the server:
 npm start
 ```
 
-The API should now be accessible at http://localhost:3000.
+The API should now be accessible at http://localhost:4000.
 
 ## API Documentation
 
-The API documentation can be accessed by visiting http://localhost:3000/graphql while the server is running. The documentation provides details about available queries, mutations, and their input/output types.
+The API documentation can be accessed by visiting http://localhost:4000/graphql while the server is running. The documentation provides details about available queries, mutations, and their input/output types.
 
 ## Authentication
 
 The API supports user authentication using JSON Web Tokens (JWT). In order to perform admin actions, you need to authenticate as an admin user. Here's how you can obtain an access token:
 
-- Make a POST request to /login with valid login credentials.
+- Make a mutations request to /graphql with valid login credentials.
 - If the login is successful, you will receive a response containing an access token.
 - Include the access token in the Authorization header of subsequent requests using the format: Bearer <access_token>.
 
@@ -77,6 +77,7 @@ The following mutations are available:
 - `activateComment`: Activates a comment. Requires admin authentication.
 - `deactivateComment`: Deactivates a comment. Requires admin authentication.
 - `registerUser`: Registers a new user in the system.
+- `loginUser`: Login user in system
 - `rateJoke`: Rates a joke with a given score (e.g., 1-5 stars).
 - `updateUserProfile`: Updates the profile information for a user.
 - `deleteUser`: Deletes a user from the system.
@@ -89,12 +90,18 @@ The following mutations are available:
 
 Please note that the likeJoke, addComment, activateComment, and deactivateComment mutations require user authentication.
 
+## Subscriptions
+
+The following subscriptions are available:
+
+- `jokeAdded`: Real-time display of a new joke that adds to the system
+
 ## Testing
 
 To run the tests, use the following command:
 
 ```shell
-npm run test
+npm run test:e2e
 ```
 
 This will execute the test suite and provide the test results.
@@ -111,10 +118,15 @@ docker build -t joke-api .
 
 Run the Docker container:
 ```shell
-docker run -p 3000:3000 joke-api
+docker run -p 4000:4000 joke-api
 ```
 
-The API will be accessible at http://localhost:3000 within the Docker container.
+Also you can run api and postgres with docker-compose:
+```shell
+docker compose up -d
+```
+
+The API will be accessible at http://localhost:4000 within the Docker container.
 
 ## Models
 
@@ -124,7 +136,7 @@ The API will be accessible at http://localhost:3000 within the Docker container.
 interface Joke {
   id: string;
   text: string;
-  category: string;
+  category: Category;
   likes: number;
   createdAt: Date;
   updatedAt: Date;

@@ -40,7 +40,7 @@ model Comment {
   updatedAt DateTime   @default(now())
   Activity  Activity[]
   userId    Int
-  Joke      Joke      @relation(fields: [jokeId], references: [id], onDelete: Cascade)
+  Joke      Joke       @relation(fields: [jokeId], references: [id], onDelete: Cascade)
   jokeId    Int
 }
 
@@ -71,11 +71,11 @@ enum Role {
 }
 
 model UserProfile {
-  id        Int    @id @default(autoincrement())
-  firstName String
-  lastName  String
-  bio       String
-  avatar    String
+  id        Int     @id @default(autoincrement())
+  firstName String?
+  lastName  String?
+  bio       String?
+  avatar    String?
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
@@ -100,8 +100,7 @@ model Tag {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  Joke      Joke?    @relation(fields: [jokeId], references: [id])
-  jokeId    Int?
+  Joke      Joke[]
 }
 
 model TagCategory {
@@ -144,7 +143,6 @@ model Report {
   reason String
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
   jokeId    Int
   userId    Int
 }
@@ -160,15 +158,15 @@ model Admin {
 
 model Activity {
   id        Int          @id @default(autoincrement())
-  joke      Joke         @relation(fields: [jokeId], references: [id])
-  comment   Comment      @relation(fields: [commentId], references: [id])
-  user      User         @relation(fields: [userId], references: [id])
+  joke      Joke?        @relation(fields: [jokeId], references: [id])
+  comment   Comment?     @relation(fields: [commentId], references: [id])
+  user      User?        @relation(fields: [userId], references: [id])
   type      ActivityType
   cretaedAt DateTime     @default(now())
   updatedAt DateTime     @default(now())
-  jokeId    Int
-  commentId Int
-  userId    Int
+  jokeId    Int?
+  commentId Int?
+  userId    Int?
 }
 
 enum ActivityType {

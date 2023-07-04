@@ -1,0 +1,231 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserProfile {
+  id: Int!
+  firstName: String
+  lastName: String
+  bio: String
+  avatar: String
+  user: User!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  """Example field (1)"""
+  id: Int!
+  username: String!
+  email: String!
+  password: String!
+  profile: UserProfile
+  role: Role!
+}
+
+enum Role {
+  Admin
+  User
+}
+
+type AuthPayload {
+  access_token: String!
+}
+
+type Category {
+  id: Int!
+  name: String!
+  description: String
+  joke: Joke
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Tag {
+  id: Int!
+  name: String!
+  joke: [Joke!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Comment {
+  id: Int!
+  text: String!
+  active: Boolean!
+  joke: Joke!
+  user: User!
+  createdAt: DateTime!
+}
+
+type Like {
+  id: Int!
+  joke: Joke!
+  user: User!
+}
+
+type Joke {
+  id: Int!
+  text: String!
+  likes: Int!
+  rate: Float!
+  category: Category
+  tag: [Tag!]
+  comment: [Comment!]
+  like: [Like!]
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Rating {
+  id: Int!
+  score: Float!
+  joke: Joke!
+  user: User!
+  createdAt: DateTime!
+}
+
+type Report {
+  id: Int!
+  reason: String!
+  joke: Joke!
+  user: User!
+  createdAt: DateTime!
+}
+
+type Query {
+  user(id: Int!): User!
+  getAllJokes: [Joke!]!
+  searchJokes(query: String!): [Joke!]!
+  getJokesByFilter(categoryId: Int!): [Joke!]!
+  getTopJokes: [Joke!]!
+  getRandomJoke: Joke!
+  getJokeById(id: Int!): Joke!
+  getUserLikedJokes: [Joke!]!
+  category(id: Int!): Category!
+  getCommentsByJoke(id: Int!): [Comment!]!
+  comment: [Comment!]!
+  reports: [Report!]!
+  report(id: Int!): Report!
+  tag(id: Int!): Tag!
+}
+
+type Mutation {
+  registerUser(registerInput: RegisterInput!): AuthPayload!
+  loginUser(loginInput: LoginInput!): AuthPayload!
+  updateUserProfile(updateProfileInput: UpdateProfileInput!): UserProfile!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  deleteUser(id: Int!): User!
+  addJoke(createJokeInput: CreateJokeInput!): Joke!
+  editJoke(updateJokeInput: UpdateJokeInput!): Joke!
+  deleteJoke(id: Int!): Joke!
+  addCategory(createCategoryInput: CreateCategoryInput!): Category!
+  editCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  deleteCategory(id: Int!): Category!
+  rateJoke(createRatingInput: CreateRatingInput!): Rating!
+  addComment(createCommentInput: CreateCommentInput!): Comment!
+  activateComment(id: Int!): Comment!
+  deactivateComment(id: Int!): Comment!
+  removeComment(id: Int!): Comment!
+  likeJoke(createLikeInput: CreateLikeInput!): Like!
+  createReport(createReportInput: CreateReportInput!): Report!
+  removeReport(id: Int!): Report!
+  createTag(createTagInput: CreateTagInput!): Tag!
+  getPopularTags: [Tag!]!
+  addTagToJoke(jokeId: Int!, tagId: Int!): Tag!
+  removeTagFromJoke(jokeId: Int!, tagId: Int!): Tag!
+  updateTag(updateTagInput: UpdateTagInput!): Tag!
+  removeTag(id: Int!): Tag!
+}
+
+input RegisterInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  """email or username"""
+  emailOrUsername: String!
+  password: String!
+}
+
+input UpdateProfileInput {
+  firstName: String
+  lastName: String
+  bio: String
+  avatar: String
+}
+
+input CreateUserInput {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  email: String
+  username: String
+  password: String
+  id: Int!
+}
+
+input CreateJokeInput {
+  text: String!
+  categoryId: Int!
+}
+
+input UpdateJokeInput {
+  text: String
+  categoryId: Int
+  id: Int!
+}
+
+input CreateCategoryInput {
+  name: String!
+  description: String
+}
+
+input UpdateCategoryInput {
+  name: String
+  description: String
+  id: Int!
+}
+
+input CreateRatingInput {
+  """4"""
+  score: Int!
+  jokeId: Int!
+}
+
+input CreateCommentInput {
+  text: String!
+  jokeId: Int!
+}
+
+input CreateLikeInput {
+  jokeId: Int!
+}
+
+input CreateReportInput {
+  jokeId: Int!
+  reason: String!
+}
+
+input CreateTagInput {
+  name: String!
+}
+
+input UpdateTagInput {
+  name: String
+  id: Int!
+}
+
+type Subscription {
+  jokeAdded: Joke!
+}
