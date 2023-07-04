@@ -53,10 +53,11 @@ export class JokeResolver {
     return this.jokeService.getJokesByFilter(+id);
   }
 
-  /*
   @Public()
   @Query(() => [Joke])
-  getHotJokes(@Args())*/
+  getHotJokes() {
+    return this.jokeService.getHotJokes();
+  }
 
   @Public()
   @Query(() => [Joke], { name: 'getTopJokes' })

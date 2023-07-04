@@ -34,6 +34,17 @@ export class JokeService {
     });
   }
 
+  getHotJokes() {
+    return this.prisma.joke.findMany({
+      include: { Category: true, Like: true, Comment: true, Tags: true },
+      orderBy: {
+        Activite: {
+          _count: 'desc',
+        },
+      },
+    });
+  }
+
   async search(query: string) {
     return await this.prisma.joke.findMany({
       where: { text: { contains: query } },
