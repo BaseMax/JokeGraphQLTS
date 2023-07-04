@@ -134,7 +134,7 @@ type Mutation {
   deactivateComment(id: Int!): Comment!
   removeComment(id: Int!): Comment!
   likeJoke(createLikeInput: CreateLikeInput!): Like!
-  createReport(createReportInput: CreateReportInput!): Report!
+  reportJoke(createReportInput: CreateReportInput!): Report!
   removeReport(id: Int!): Report!
   createTag(createTagInput: CreateTagInput!): Tag!
   getPopularTags: [Tag!]!
