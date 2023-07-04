@@ -1,4 +1,4 @@
-# Joke API
+# Joke GraphQL API
 
 This repository contains a GraphQL-based API project built with TypeScript and Apollo GraphQL. It provides various functionalities related to jokes, including retrieving jokes, filtering and ordering them, searching within jokes, adding new jokes, editing existing jokes, and deleting jokes. Additionally, the API supports user authentication for admin access, while allowing guest users to access most of the available queries. Users can also like jokes, add comments to jokes, retrieve all comments sorted by criteria, and admins have the ability to activate or deactivate comments. The project includes tests and can be deployed using Docker.
 
