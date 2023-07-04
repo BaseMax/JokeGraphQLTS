@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLikeInput } from './dto/create-like.input';
 import { PrismaService } from '../prisma/prisma.service';
+import { ActivityService } from '../activity/activity.service';
+import { ActivityType } from '../activity/types/activity.enum';
 
 @Injectable()
 export class LikeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly activityService: ActivityService,
+  ) {}
 
   async likeJoke(userId: number, createLikeInput: CreateLikeInput) {
-    const likeExists = await this.checkLikeExistsinUser(
+    const likeExists = await this.checkLikeExistingUser(
       userId,
       createLikeInput.jokeId,
     );
@@ -19,7 +24,7 @@ export class LikeService {
     );
   }
 
-  private async checkLikeExistsinUser(
+  private async checkLikeExistingUser(
     userId: number,
     jokeId: number,
   ): Promise<{ exists: boolean; id: number }> {
@@ -59,6 +64,12 @@ export class LikeService {
             joke: true,
             user: true,
           },
+        });
+
+        await this.activityService.create({
+          type: ActivityType.Like,
+          jokeId: like.jokeId,
+          userId: like.userId,
         });
 
         updatedLike = joke.likes + 1;

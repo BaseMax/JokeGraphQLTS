@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { LikeService } from './like.service';
 import { Like } from './entities/like.entity';
 import { CreateLikeInput } from './dto/create-like.input';
@@ -11,8 +11,8 @@ export class LikeResolver {
   @Mutation(() => Like)
   likeJoke(
     @Args('createLikeInput') createLikeInput: CreateLikeInput,
-    //@GetCurrentUserId() userId: number,
+    @GetCurrentUserId() userId: number,
   ) {
-    return this.likeService.likeJoke(+2, createLikeInput);
+    return this.likeService.likeJoke(+userId, createLikeInput);
   }
 }
