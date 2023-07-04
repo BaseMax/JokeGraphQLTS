@@ -1,40 +1,33 @@
-import {
-  ExecutionContext,
-  HttpException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import { ExecutionContext, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Observable } from 'rxjs';
+import { Reflector } from '@nestjs/core';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
-export class AtGuard extends AuthGuard('jwt') {
-  constructor(private reflector: Reflector) {
+export class GqlAuthGuard extends AuthGuard('jwt') {
+  constructor(private readonly reflector: Reflector) {
     super();
   }
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    const isPublic = this.reflector.getAllAndOverride('isPublic', [
+  canActivate(context: ExecutionContext) {
+    const isPublic = this.reflector.get<boolean>(
+      'isPublic',
       context.getHandler(),
-      context.getClass(),
-    ]);
-
-    if (isPublic) return true;
+    );
+    if (isPublic) {
+      return true; // Allow access to public endpoints without authentication
+    }
 
     return super.canActivate(context);
   }
 
-  handleRequest<TUser = any>(
-    err: any,
-    user: any,
-    info: any,
-    context: ExecutionContext,
-    status?: any,
-  ): TUser {
-    if (err || info) throw new HttpException('Token not valid', 498);
+  getRequest(context: ExecutionContext): any {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req;
+  }
+
+  handleRequest(err: any, user: any, info: any) {
+    if (err || info) throw new HttpException('Invalid Token!', 498);
 
     if (!user) throw new UnauthorizedException('Access Denied.');
 

@@ -71,10 +71,10 @@ export class AuthService {
     username: string,
   ): Promise<void> {
     const emailExists = await this.userService.findByEmail(email);
-    if (emailExists) throw new BadRequestException('Email alerdy exists!');
+    if (emailExists) throw new BadRequestException('Email already exists!');
 
     const usernameExists = await this.userService.findByUsername(username);
     if (usernameExists)
-      throw new BadRequestException('Username alerdy Exists!');
+      throw new BadRequestException('Username already Exists!');
   }
 }

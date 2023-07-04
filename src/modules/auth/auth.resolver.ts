@@ -10,13 +10,13 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Public()
-  @Mutation(() => AuthPayload)
+  @Mutation(() => AuthPayload, { name: 'registerUser' })
   register(@Args('registerInput') registerInput: RegisterInput) {
     return this.authService.register(registerInput);
   }
 
   @Public()
-  @Mutation(() => AuthPayload)
+  @Mutation(() => AuthPayload, { name: 'loginUser' })
   login(@Args('loginInput') loginInput: LoginInput) {
     return this.authService.login(loginInput);
   }
