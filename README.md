@@ -39,6 +39,13 @@ The API should now be accessible at http://localhost:4000.
 
 The API documentation can be accessed by visiting http://localhost:4000/graphql while the server is running. The documentation provides details about available queries, mutations, and their input/output types.
 
+## Screenshots
+![graphql](https://raw.githubusercontent.com/BaseMax/JokeGraphQLTS/e7a6a3af1d8d6511eae8083af8ea60fbbbb68fe2/screenshots/Screenshot%20from%202023-07-04%2020-18-58.png?token=GHSAT0AAAAAACD3HLG5WDDIJ6MJLBT2ZBJGZFEK3XA)
+![graphql]([http://url/to/img.png](https://raw.githubusercontent.com/BaseMax/JokeGraphQLTS/main/screenshots/Screenshot%20from%202023-07-04%2020-47-15.png?token=GHSAT0AAAAAACD3HLG5DWFNYHGAPVZWYU6IZFEK4SA))
+![graphql]([http://url/to/img.png](https://raw.githubusercontent.com/BaseMax/JokeGraphQLTS/main/screenshots/Screenshot%20from%202023-07-04%2020-47-04.png?token=GHSAT0AAAAAACD3HLG42YE272TNOLLKYD7MZFEK43A))
+![graphql](https://raw.githubusercontent.com/BaseMax/JokeGraphQLTS/main/screenshots/Screenshot%20from%202023-07-04%2020-43-16.png?token=GHSAT0AAAAAACD3HLG42TRDNTAZKVMJAIMQZFEK5HQ)
+![graphql](https://raw.githubusercontent.com/BaseMax/JokeGraphQLTS/main/screenshots/Screenshot%20from%202023-07-04%2020-46-00.png?token=GHSAT0AAAAAACD3HLG4RIFS26QJM7XEHERIZFEK5GA)
+
 ## Authentication
 
 The API supports user authentication using JSON Web Tokens (JWT). In order to perform admin actions, you need to authenticate as an admin user. Here's how you can obtain an access token:
