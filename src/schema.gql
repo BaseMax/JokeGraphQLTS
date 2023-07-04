@@ -102,6 +102,7 @@ type Query {
   getAllJokes: [Joke!]!
   searchJokes(query: String!): [Joke!]!
   getJokesByFilter(categoryId: Int!): [Joke!]!
+  getHotJokes: [Joke!]!
   getTopJokes: [Joke!]!
   getRandomJoke: Joke!
   getJokeById(id: Int!): Joke!
