@@ -18,37 +18,58 @@ export class JokeService {
     });
   }
 
+  getJokesByFilter(id: number) {
+    return this.prisma.joke.findMany({
+      where: { categoryId: id },
+      include: { Category: true, Like: true, Comment: true, Tags: true },
+    });
+  }
+
   async getRandomJoke() {
     const jokeCount = await this.prisma.joke.count();
     const randomIndex = Math.floor(Math.random() * jokeCount);
     return await this.prisma.joke.findFirst({
       skip: randomIndex,
+      include: { Category: true, Like: true, Comment: true, Tags: true },
     });
   }
 
   async search(query: string) {
     return await this.prisma.joke.findMany({
       where: { text: { contains: query } },
+      include: { Category: true, Like: true, Comment: true, Tags: true },
     });
   }
-
-  getJokesByFilter(filter) {}
 
   getTopJokes() {
     return this.prisma.joke.findMany({
       orderBy: { rate: 'desc' },
-      include: { Category: true },
+      include: { Category: true, Like: true, Comment: true, Tags: true },
+    });
+  }
+
+  getUserLikedJokes(userId: number) {
+    return this.prisma.joke.findMany({
+      where: { Like: { some: { userId } } },
+      include: {
+        Category: true,
+        Like: true,
+        Comment: true,
+        Tags: true,
+      },
     });
   }
 
   async findAll() {
-    return await this.prisma.joke.findMany({ include: { Category: true } });
+    return await this.prisma.joke.findMany({
+      include: { Category: true, Like: true, Comment: true, Tags: true },
+    });
   }
 
   findOne(id: number) {
     return this.prisma.joke.findUnique({
       where: { id },
-      include: { Category: true },
+      include: { Category: true, Like: true, Comment: true, Tags: true },
     });
   }
 
@@ -59,6 +80,7 @@ export class JokeService {
         text: updateJokeInput.text,
         updatedAt: new Date().toString(),
       },
+      include: { Category: true, Like: true, Comment: true, Tags: true },
     });
   }
 
