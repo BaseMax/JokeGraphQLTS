@@ -73,6 +73,7 @@ The following mutations are available:
 - `editJoke`: Edits an existing joke. Requires admin authentication.
 - `deleteJoke`: Deletes a joke. Requires admin authentication.
 - `likeJoke`: Likes a joke.
+- `reportJoke`: Report a joke
 - `addComment`: Adds a comment to a joke.
 - `activateComment`: Activates a comment. Requires admin authentication.
 - `deactivateComment`: Deactivates a comment. Requires admin authentication.
@@ -127,6 +128,23 @@ docker compose up -d
 ```
 
 The API will be accessible at http://localhost:4000 within the Docker container.
+
+## Migration
+
+integrates with prisma schema for data modeling in deveolpment stage:
+```shell
+npm run migrate:dev
+```
+
+production stage: 
+```shell
+npm run migrate:prod
+```
+
+push current init migration: 
+```shell
+npm run db:push
+```
 
 ## Models
 
