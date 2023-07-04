@@ -85,6 +85,7 @@ The following mutations are available:
 - `addCategory`: Adds a new category for jokes.
 - `editCategory`: Edits the details of an existing category.
 - `deleteCategory`: Deletes a category from the system.
+- `createTag`: create a new tag
 - `addTagToJoke`: Adds a tag to a joke for better categorization.
 - `removeTagFromJoke`: Removes a tag from a joke.
 - `getPopularTags`: Retrieves the most popular tags used for jokes.
