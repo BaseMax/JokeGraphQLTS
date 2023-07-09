@@ -333,6 +333,6 @@ Contributions to this project are welcome. Feel free to open issues and submit p
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the GPL-3.0 License.
 
 Copyright 2023, Max Base
