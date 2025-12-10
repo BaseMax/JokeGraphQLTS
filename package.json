@@ -32,7 +32,7 @@
     "@nestjs/jwt": "^10.1.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.0",
-    "@nestjs/platform-express": "^10.3.7",
+    "@nestjs/platform-express": "^10.4.20",
     "@prisma/client": "^4.16.1",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
