@@ -24,8 +24,8 @@
     "db:pull": "npx prisma db pull"
   },
   "dependencies": {
-    "@apollo/server": "^5.5.0",
-    "@nestjs/apollo": "^13.2.4",
+    "@apollo/server": "^5.5.1",
+    "@nestjs/apollo": "^14.0.0",
     "@nestjs/common": "^11.0.16",
     "@nestjs/core": "^11.1.18",
     "@nestjs/graphql": "^13.4.2",
